@@ -6,16 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Order {
+@Table(name="Orders")
+public class Order extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private OrderStatus status;
 
-    private LocalDateTime orderDate;
+    private LocalDateTime localDateTime;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
@@ -29,11 +30,6 @@ public class Order {
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-
-    public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
 
     public Long getId() {
         return id;
@@ -52,11 +48,11 @@ public class Order {
     }
 
     public LocalDateTime getOrderDate() {
-        return orderDate;
+        return localDateTime;
     }
 
     public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+        this.localDateTime = orderDate;
     }
 
     public OrderStatus getStatus() {
@@ -66,7 +62,5 @@ public class Order {
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
-
-
 
 }
