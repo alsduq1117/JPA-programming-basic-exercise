@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name="Orders")
 public class Order extends BaseEntity{
@@ -18,15 +21,15 @@ public class Order extends BaseEntity{
 
     private LocalDateTime localDateTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order" ,cascade = ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = LAZY, cascade = ALL) // Order를 생성해서 Delivery에 넣을때 자동으로 Delivery 저장
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
